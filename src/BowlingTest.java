@@ -66,12 +66,41 @@ public class BowlingTest {
      */
     @Test
     public void reset_ClearedFrame_ScoresAfterResetMatchScoresBeforeInit() {
-        String scoreBeforeInit = this.completeGame.toString().substring(104, 155);
-
-        for (int i = 0; i < this.completeGame.m_frames.size(); i++) {
-            this.completeGame.m_frames.get(i).reset();
+        String scoreBeforeInit = this.game.toString().substring(104, 155);
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
         }
-        String scoreAfterReset = this.completeGame.toString().substring(104, 155);
+        String scoreAfterReset = this.game.toString().substring(104, 155);
         assertEquals("resetScore", scoreBeforeInit, scoreAfterReset);
+    }
+
+    /**
+     * Verifiy that the scores of the frames can be set after a reset.
+     * @result The scores are added to the chart.
+     */
+    @Test
+    public void setPinDown_AfterReset_setFrame1() {
+        //String scoreBeforeInit = this.game.toString().substring(104, 155);
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
+        }
+
+        this.game.m_frames.get(1).setPinsDown(1, 3).setPinsDown(2, 6);
+    }
+
+    /**
+     * Verifiy that the score of the second roll cannot be added after the score of the first roll.
+     * @result A BowlingException is raised : "You must first enter the score for roll 1".
+     */
+    @Test
+    public void setPinDown_AfterReset_1Before2_Exception() {
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
+        }
+
+        this.game.m_frames.get(1).setPinsDown(2, 3).setPinsDown(1, 6);
     }
 }
