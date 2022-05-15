@@ -17,6 +17,6 @@ public class BowlingTest {
     }
 
     @Test
-    public void setPinDownFirstParameterShouldBe1Before2() {
+    public void setPinDown_FirstParameter_1Before2() {
     }
 }
