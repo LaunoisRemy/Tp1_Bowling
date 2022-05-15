@@ -117,17 +117,6 @@ public class BowlingTest {
     }
 
 // =============== Test sur la classe Frame ===========================================
-    /**
-     * Test if setPinDown works if hit 1 and before 2
-
-
-    @Test
-    public void getCumulativeScore_OpenHit_Get7(){
-        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 5).setPinsDown(2 ,2));
-        int score = this.game.getCumulativeScore(1);
-        Assert.assertEquals("The score should be ",7,score);
-
-    }
 
     /**
      * Test if when there is a strike, it displays "X" and a space
