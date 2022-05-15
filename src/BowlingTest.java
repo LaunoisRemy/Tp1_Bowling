@@ -1,6 +1,7 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import stev.bowling.BowlingException;
 import stev.bowling.Game;
 import stev.bowling.NormalFrame;
 
@@ -28,7 +29,7 @@ public class BowlingTest {
     public void setPinDown_FirstParameter_1Before2() {
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 3).setPinsDown(2, 6));
     }
-    @Test
+    @Test(expected = BowlingException.class)
     public void setPinDown_FirstParameter_2Before1_Exception() {
         this.game.addFrame(new NormalFrame(2).setPinsDown(1, 3).setPinsDown(1, 6));
     }
