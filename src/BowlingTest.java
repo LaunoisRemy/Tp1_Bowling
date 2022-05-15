@@ -42,7 +42,7 @@ public class BowlingTest {
 
 
     @Test
-    public void getCumulativeScore_OpenHit_get7(){
+    public void getCumulativeScore_OpenHit_Get7(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 5).setPinsDown(2 ,2));
         int score = this.game.getCumulativeScore(1);
         Assert.assertEquals("The score should be ",7,score);
@@ -193,13 +193,7 @@ public class BowlingTest {
         this.game.addFrame(new NormalFrame(2).setPinsDown(2, 3).setPinsDown(1, 6));
     }
 
-    @Test
-    public void getCumulativeScore_OpenHit_get7(){
-        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 5).setPinsDown(2 ,2));
-        int score = this.game.getCumulativeScore(1);
-        Assert.assertEquals("The score should be ",7,score);
 
-    }
 
     /**
      * Reset the scores of each frame.
