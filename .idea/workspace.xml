@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5cd928d-5ab7-402f-89a3-04abcabeb39f" name="Changes" comment="" />
+    <list default="true" id="b5cd928d-5ab7-402f-89a3-04abcabeb39f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/qaplug_profiles.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BowlingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BowlingTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +55,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
+    "extract.method.default.visibility": "private",
     "jdk.selected.JAVA_MODULE": "openjdk-18",
     "last_opened_file_path": "G:/Mon Drive/Cours/UQAC/T3/Test/bowling-score.jar",
     "node.js.detected.package.eslint": "true",
@@ -75,7 +81,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BowlingTest.lastFrame_goodFrameNumber">
+  <component name="RunManager" selected="JUnit.BowlingTest.lastFrame_WithSpare_Void">
     <configuration name="BowlingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Tp1_Bowling" />
       <option name="PACKAGE_NAME" value="" />
@@ -85,11 +91,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BowlingTest.lastFrame_OutOfRange_Exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BowlingTest.lastFrame_3Strike_Void" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Tp1_Bowling" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="BowlingTest" />
-      <option name="METHOD_NAME" value="lastFrame_OutOfRange_Exception" />
+      <option name="METHOD_NAME" value="lastFrame_3Strike_Void" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BowlingTest.lastFrame_3hitWithStrikeFirst_Void" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Tp1_Bowling" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BowlingTest" />
+      <option name="METHOD_NAME" value="lastFrame_3hitWithStrikeFirst_Void" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BowlingTest.lastFrame_WithSpare_Void" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Tp1_Bowling" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BowlingTest" />
+      <option name="METHOD_NAME" value="lastFrame_WithSpare_Void" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -105,33 +131,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BowlingTest.newNormalFrame_Order_Exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Tp1_Bowling" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="BowlingTest" />
-      <option name="METHOD_NAME" value="newNormalFrame_Order_Exception" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="BowlingTest.newNormalFrame_OutOfRange_Exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Tp1_Bowling" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="BowlingTest" />
-      <option name="METHOD_NAME" value="newNormalFrame_OutOfRange_Exception" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BowlingTest.lastFrame_WithSpare_Void" />
+        <item itemvalue="JUnit.BowlingTest.lastFrame_3hitWithStrikeFirst_Void" />
+        <item itemvalue="JUnit.BowlingTest.lastFrame_3Strike_Void" />
         <item itemvalue="JUnit.BowlingTest.lastFrame_goodFrameNumber" />
-        <item itemvalue="JUnit.BowlingTest.lastFrame_OutOfRange_Exception" />
         <item itemvalue="JUnit.BowlingTest" />
-        <item itemvalue="JUnit.BowlingTest.newNormalFrame_OutOfRange_Exception" />
-        <item itemvalue="JUnit.BowlingTest.newNormalFrame_Order_Exception" />
       </list>
     </recent_temporary>
   </component>
@@ -143,7 +149,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1652635435253</updated>
-      <workItem from="1652635437032" duration="10293000" />
+      <workItem from="1652635437032" duration="12239000" />
     </task>
     <task id="LOCAL-00001" summary="GitIgnore">
       <created>1652637482883</created>
@@ -187,7 +193,28 @@
       <option name="project" value="LOCAL" />
       <updated>1652645800718</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="gitIgnore">
+      <created>1652645880172</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652645880172</updated>
+    </task>
+    <task id="LOCAL-00008" summary="COnfig">
+      <created>1652645932166</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1652645932166</updated>
+    </task>
+    <task id="LOCAL-00009" summary="COnfig">
+      <created>1652645971529</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1652645971529</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,6 +227,8 @@
     <MESSAGE value="Exception" />
     <MESSAGE value="With assertion" />
     <MESSAGE value="Test Frame and cumulative score" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test Frame and cumulative score" />
+    <MESSAGE value="gitIgnore" />
+    <MESSAGE value="COnfig" />
+    <option name="LAST_COMMIT_MESSAGE" value="COnfig" />
   </component>
 </project>
