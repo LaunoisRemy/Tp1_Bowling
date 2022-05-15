@@ -51,7 +51,6 @@ public class BowlingTest {
         this.game.addFrame(new NormalFrame(2).setPinsDown(2, 3).setPinsDown(1, 6));
     }
 
-
     @Test
     public void getCumulativeScore_OpenHit_get7(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 5).setPinsDown(2 ,2));
@@ -61,9 +60,9 @@ public class BowlingTest {
     }
 
     /**
-     * Create a valid account.
-     * @result Account will be persisted without any errors,
-     *         and Account.getId() will no longer be <code>null</code>
+     * Reset the scores of each frame.
+     * @result The scores will be reset and thus be identical to the score
+     * chart at the beginning of the game. The assertion is thus true.
      */
     @Test
     public void reset_ClearedFrame_ScoresAfterResetMatchScoresBeforeInit() {
