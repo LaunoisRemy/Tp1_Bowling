@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import stev.bowling.BowlingException;
@@ -31,6 +32,15 @@ public class BowlingTest {
     }
     @Test(expected = BowlingException.class)
     public void setPinDown_FirstParameter_2Before1_Exception() {
-        this.game.addFrame(new NormalFrame(2).setPinsDown(1, 3).setPinsDown(1, 6));
+        this.game.addFrame(new NormalFrame(1).setPinsDown(2, 3).setPinsDown(1, 6));
+    }
+
+
+    @Test
+    public void getCumulativeScore_OpenHit_get7(){
+        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 5).setPinsDown(2 ,2));
+        int score = this.game.getCumulativeScore(1);
+        Assert.assertEquals("The score should be ",7,score);
+
     }
 }
