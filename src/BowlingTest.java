@@ -41,7 +41,7 @@ public class BowlingTest {
 // =============== Test sur la classe NormalFrame =====================================
 
     /**
-     * Test if the frame creation work in order
+     * Test if the frame creation works in order
      */
     @Test(expected = BowlingException.class)
     public void newNormalFrame_Order_Exception() {
@@ -50,7 +50,7 @@ public class BowlingTest {
     }
 
     /**
-     * Test si la creation d'une nouvelle frame peut se faire avec des chiffres negatifs
+     * Test if the creation of a new frame can be done with negative numbers
      */
     @Test(expected = BowlingException.class)
     public void newNormalFrame_OutOfRangeNegative_Exception() {
@@ -76,7 +76,7 @@ public class BowlingTest {
     }
 
     /**
-     * Test if the last frame give the possibilyt to have 3 hits with 3 strikes
+     * Test if the last frame give the possibility to have 3 hits with 3 strikes
      */
     @Test
     public void lastFrame_3Strike_Void() {
@@ -85,7 +85,7 @@ public class BowlingTest {
         assertEquals(10,completeGame.getCumulativeScore(10));
     }
     /**
-     * Test if the last frame give the possibilyt to have 3 hits with strike at first
+     * Test if the last frame give the possibility to have 3 hits with strike at first
      */
     @Test
     public void lastFrame_3hitWithStrikeFirst_Void() {
@@ -93,7 +93,7 @@ public class BowlingTest {
         this.game.addFrame(new LastFrame(10).setPinsDown(1, 10).setPinsDown(2, 5).setPinsDown(3, 2));
     }
     /**
-     * Test if the last frame give the possibilyt to have 3 hits with strike at first
+     * Test if the last frame give the possibility to have 3 hits with strike at first
      */
     @Test
     public void lastFrame_WithSpare_Void() {
@@ -102,7 +102,7 @@ public class BowlingTest {
     }
 
     /**
-     * Method permit to create a game with 9 frame
+     * Create a game with only  9 frames
      */
     private void createGameWithoutLast() {
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 10));
@@ -262,6 +262,105 @@ public class BowlingTest {
         this.game.addFrame(new NormalFrame(2).setPinsDown(2, 3).setPinsDown(1, 6));
     }
 
+    /**
+     * Reset the scores of each frame.
+     * @result The scores will be reset and thus be identical to the score
+     * chart at the beginning of the game. The assertion is thus true.
+     */
+    @Test
+    public void reset_ClearedFrame_ScoresAfterResetMatchScoresBeforeInit() {
+        String scoreBeforeInit = this.game.toString().substring(104, 155);
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
+        }
+        String scoreAfterReset = this.game.toString().substring(104, 155);
+        assertEquals("resetScore :", scoreBeforeInit, scoreAfterReset);
+    }
+
+    /**
+     * Verify that the scores of the frames can be set after a reset.
+     * @result The scores are added to the chart.
+     */
+    @Test
+    public void setPinDown_AfterReset_setFrame1() {
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
+        }
+
+        this.game.m_frames.get(1).setPinsDown(1, 3).setPinsDown(2, 6);
+    }
+
+    /**
+     * Verify that the score of the second roll cannot be added after the score of the first roll.
+     * @result A BowlingException is raised : "You must first enter the score for roll 1".
+     */
+    @Test(expected = BowlingException.class)
+    public void setPinDown_AfterReset_1Before2_Exception() {
+        game = completeGame;
+        for (int i = 0; i < this.game.m_frames.size(); i++) {
+            this.game.m_frames.get(i).reset();
+        }
+
+        this.game.m_frames.get(1).setPinsDown(2, 3).setPinsDown(1, 6);
+    }
+
+    /**
+     * Verify that number of rolls counted byt the method correspond to the number of rolls set by frame.
+     * @result The assertions are true.
+     */
+    @Test
+    public void countRolls_returnExactNumberOfRollsByFrame() {
+        game = completeGame;
+
+        Assert.assertEquals("countRollsByFrame : ",2,this.game.m_frames.get(0).countRolls());
+        Assert.assertEquals("countRollsByFrame : ",1,this.game.m_frames.get(1).countRolls());
+        Assert.assertEquals("countRollsByFrame : ",3,this.game.m_frames.get(9).countRolls());
+
+        this.game.m_frames.get(9).reset();
+        this.game.m_frames.get(9).setPinsDown(1, 4).setPinsDown(2, 5);
+
+        Assert.assertEquals("countRollsByFrame : ",2,this.game.m_frames.get(9).countRolls());
+    }
+
+    /**
+     * Verify that number of pins down counted by the method correspond to the total sum of the score of each roll set by frame.
+     * @result The assertions are true except for the last one. When there are only two rolls in the last
+     * frame the score isn't exact : The assertion expects 9 (4 + 5) and the method tested return 8.
+     */
+    @Test
+    public void countPinsDown_returnExactNumberOfPinsByFrame() {
+        game = completeGame;
+
+        Assert.assertEquals("countPinsDownByFrame : ",9,this.game.m_frames.get(0).countPinsDown());
+        Assert.assertEquals("countPinsDownByFrame : ",10,this.game.m_frames.get(1).countPinsDown());
+        Assert.assertEquals("countPinsDownByFrame : ",0,this.game.m_frames.get(5).countPinsDown());
+        Assert.assertEquals("countPinsDownByFrame : ",13,this.game.m_frames.get(9).countPinsDown());
+
+        this.game.m_frames.get(9).reset();
+        this.game.m_frames.get(9).setPinsDown(1, 4).setPinsDown(2, 5);
+
+        Assert.assertEquals("countPinsDownByFrame : ",9,this.game.m_frames.get(9).countPinsDown());
+    }
+
+    /**
+     * Verify that number of pins down by roll counted by the method correspond to the score set by roll.
+     * @result The assertions are true except for the last one. If a roll did not happen, the method should
+     * return -1 as the number of pins down for the roll however it returns 0.
+     */
+    @Test
+    public void getPinsDown_returnExactNumberOfPinsDownByRoll() {
+        game = completeGame;
+
+        Assert.assertEquals("getPinsDownByRoll : ",10,this.game.m_frames.get(1).getPinsDown(1));
+        Assert.assertEquals("getPinsDownByRoll : ",0,this.game.m_frames.get(2).getPinsDown(2));
+        Assert.assertEquals("getPinsDownByRoll : ",1,this.game.m_frames.get(9).getPinsDown(1));
+        Assert.assertEquals("getPinsDownByRoll : ",9,this.game.m_frames.get(9).getPinsDown(2));
+        Assert.assertEquals("getPinsDownByRoll : ",3,this.game.m_frames.get(9).getPinsDown(3));
+        Assert.assertEquals("getPinsDownByRoll : ",-1,this.game.m_frames.get(1).getPinsDown(2));
+    }
+
     // =============== Test sur la classe Game ===========================================
 
     /**
@@ -322,51 +421,6 @@ public class BowlingTest {
     public void getCumulativeScore_Parameters_BowlingException() {
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 8).setPinsDown(2 ,2));
         this.game.getCumulativeScore(2);
-    }
-
-    /**
-     * Reset the scores of each frame.
-     * @result The scores will be reset and thus be identical to the score
-     * chart at the beginning of the game. The assertion is thus true.
-     */
-    @Test
-    public void reset_ClearedFrame_ScoresAfterResetMatchScoresBeforeInit() {
-        String scoreBeforeInit = this.game.toString().substring(104, 155);
-        game = completeGame;
-        for (int i = 0; i < this.game.m_frames.size(); i++) {
-            this.game.m_frames.get(i).reset();
-        }
-        String scoreAfterReset = this.game.toString().substring(104, 155);
-        assertEquals("resetScore", scoreBeforeInit, scoreAfterReset);
-    }
-
-    /**
-     * Verifiy that the scores of the frames can be set after a reset.
-     * @result The scores are added to the chart.
-     */
-    @Test
-    public void setPinDown_AfterReset_setFrame1() {
-        //String scoreBeforeInit = this.game.toString().substring(104, 155);
-        game = completeGame;
-        for (int i = 0; i < this.game.m_frames.size(); i++) {
-            this.game.m_frames.get(i).reset();
-        }
-
-        this.game.m_frames.get(1).setPinsDown(1, 3).setPinsDown(2, 6);
-    }
-
-    /**
-     * Verifiy that the score of the second roll cannot be added after the score of the first roll.
-     * @result A BowlingException is raised : "You must first enter the score for roll 1".
-     */
-    @Test
-    public void setPinDown_AfterReset_1Before2_Exception() {
-        game = completeGame;
-        for (int i = 0; i < this.game.m_frames.size(); i++) {
-            this.game.m_frames.get(i).reset();
-        }
-
-        this.game.m_frames.get(1).setPinsDown(2, 3).setPinsDown(1, 6);
     }
 
 }
