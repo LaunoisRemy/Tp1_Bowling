@@ -81,7 +81,7 @@ public class BowlingTest {
     @Test
     public void lastFrame_3Strike_Void() {
         createGameWithoutLast();
-        this.game.addFrame(new LastFrame(10).setPinsDown(1, 10).setPinsDown(2, 10).setPinsDown(10, 10));
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 10).setPinsDown(2, 10).setPinsDown(3, 10));
         assertEquals(10,completeGame.getCumulativeScore(10));
     }
     /**
@@ -100,6 +100,16 @@ public class BowlingTest {
         createGameWithoutLast();
         this.game.addFrame(new LastFrame(10).setPinsDown(1, 5).setPinsDown(2, 5).setPinsDown(3, 2));
     }
+
+    /**
+     * Test if the last frame block the possibility to have 3 hits with open hit
+     */
+    @Test(expected = BowlingException.class)
+    public void lastFrame_WithOpenHit_BowlingException() {
+        createGameWithoutLast();
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 5).setPinsDown(2, 2).setPinsDown(3, 2));
+    }
+
 
     /**
      * Create a game with only  9 frames
@@ -237,12 +247,29 @@ public class BowlingTest {
     public void setPinsDown_ScoreYNegative_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, -1).setPinsDown(2, 3));
     }
+
+    /**
+     * Test if an Exception is caught when a Negative score is put on the second pinDown
+     */
+    @Test(expected = BowlingException.class)
+    public void setPinsDown_ScoreYNegativeOnSecond_BowlingException(){
+        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 2).setPinsDown(2, -1));
+    }
+
     /**
      * Test if an Exception is caught when a score more than 10 is put
      */
     @Test(expected = BowlingException.class)
     public void setPinsDown_ScoreYMoreThanTen_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 11).setPinsDown(2, 3));
+    }
+
+    /**
+     * Test if an Exception is caught when a score more than 10 is put on second pindDown
+     */
+    @Test(expected = BowlingException.class)
+    public void setPinsDown_ScoreYMoreThanTenSecond_BowlingException(){
+        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 3).setPinsDown(2, 11));
     }
 
     /**
