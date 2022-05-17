@@ -35,8 +35,7 @@ public class GameDemo
 	public static void main(String[] args)
 	{
 		Game g = new Game();
-		g.addFrame(new NormalFrame(1).setPinsDown(1, 8).setPinsDown(2, 3));
-
+		g.addFrame(new NormalFrame(0).setPinsDown(1, 8).setPinsDown(2, 2));
 		System.out.println(g);
 	}
 

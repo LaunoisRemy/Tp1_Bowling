@@ -65,6 +65,14 @@ public class BowlingTest {
         this.game.addFrame(new NormalFrame(10).setPinsDown(1, 10));
     }
 
+    /**
+     * Test if the normal frame can have the number 0, must raise an exception
+     */
+    @Test(expected = BowlingException.class)
+    public void newNormalFrame_ZeroFrame_Exception() {
+        this.game.addFrame(new NormalFrame(0).setPinsDown(1, 10));
+    }
+
 // =============== Test sur la classe LastFrame =====================================
 
     /**
@@ -110,6 +118,23 @@ public class BowlingTest {
         this.game.addFrame(new LastFrame(10).setPinsDown(1, 5).setPinsDown(2, 2).setPinsDown(3, 2));
     }
 
+    /**
+     * Test if the last frame must have tree roll if there is a strike at roll 1 or 2
+     */
+    @Test(expected = BowlingException.class)
+    public void lastFrame_WithStrike_BowlingExceptionIfNoThirdRoll() {
+        createGameWithoutLast();
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 10).setPinsDown(2, 2));
+    }
+
+    /**
+     * Test if the last frame must have tree roll if there is a spare at roll 2
+     */
+    @Test(expected = BowlingException.class)
+    public void lastFrame_WithSpare_BowlingExceptionIfNoThirdRoll() {
+        createGameWithoutLast();
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 2).setPinsDown(2, 8));
+    }
 
     /**
      * Create a game with only  9 frames
@@ -185,10 +210,10 @@ public class BowlingTest {
     }
 
     /**
-     * Test if this is the tenth frame, it displays 3 character
+     * Test if this is the tenth frame and strike or spare, it displays 3 character
      */
     @Test
-    public void toString_FrameTen_GetThreeCharacters(){
+    public void toString_FrameTenWithStrikeOrSpare_GetThreeCharacters(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 2).setPinsDown(2,3));
         this.game.addFrame(new NormalFrame(2).setPinsDown(1, 2).setPinsDown(2,3));
         this.game.addFrame(new NormalFrame(3).setPinsDown(1, 2).setPinsDown(2,3));
@@ -205,6 +230,30 @@ public class BowlingTest {
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  23|  23|  23|  23|  23|  23|  23|  23|  23| 3/3|\n" +
                 "|5   |10  |15  |20  |25  |30  |35  |40  |45  |58  |",display);
+
+    }
+
+    /**
+     * Test if this is the tenth frame and no strike and no spare, it displays 3 character
+     */
+    @Test(expected = BowlingException.class)
+    public void toString_FrameTenWithoutStrikeOrSpare_GetThreeCharacters(){
+        this.game.addFrame(new NormalFrame(1).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(2).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(3).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(4).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(5).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(6).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(7).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(8).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new NormalFrame(9).setPinsDown(1, 2).setPinsDown(2,3));
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 3).setPinsDown(2,3));
+
+        String display = this.game.toString();
+        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+                "|----+----+----+----+----+----+----+----+----+----+\n" +
+                "|  8/|  81|  81|  81|  81|  81|  81|  81|  81| 81|\n" +
+                "|18  |27  |36  |45  |54  |63  |72  |81  |90  |99  |",display);
 
     }
 
@@ -241,37 +290,52 @@ public class BowlingTest {
     }
 
     /**
-     * Test if an Exception is caught when a Negative score is put
+     * Test if an Exception is caught when a Negative score is put on the first roll
      */
     @Test(expected = BowlingException.class)
-    public void setPinsDown_ScoreYNegative_BowlingException(){
+    public void setPinsDown_ScoreYNegativeOnFirstRoll_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, -1).setPinsDown(2, 3));
     }
 
     /**
-     * Test if an Exception is caught when a Negative score is put on the second pinDown
+     * Test if an Exception is caught when a Negative score is put on the second roll
      */
     @Test(expected = BowlingException.class)
-    public void setPinsDown_ScoreYNegativeOnSecond_BowlingException(){
+    public void setPinsDown_ScoreYNegativeOnSecondRoll_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 2).setPinsDown(2, -1));
     }
 
     /**
-     * Test if an Exception is caught when a score more than 10 is put
+     * Test if an Exception is caught when a Negative score is put on the third roll
      */
     @Test(expected = BowlingException.class)
-    public void setPinsDown_ScoreYMoreThanTen_BowlingException(){
+    public void setPinsDown_ScoreYNegativeOnThirdRoll_BowlingException(){
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 1).setPinsDown(2, 9).setPinsDown(3,-1));
+    }
+
+    /**
+     * Test if an Exception is caught when a score more than 10 is put on the first roll
+     */
+    @Test(expected = BowlingException.class)
+    public void setPinsDown_ScoreYMoreThanTenOnFirstRoll_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 11).setPinsDown(2, 3));
     }
 
     /**
-     * Test if an Exception is caught when a score more than 10 is put on second pindDown
+     * Test if an Exception is caught when a score more than 10 is put on the second roll
      */
     @Test(expected = BowlingException.class)
-    public void setPinsDown_ScoreYMoreThanTenSecond_BowlingException(){
+    public void setPinsDown_ScoreYMoreThanTenSecondRoll_BowlingException(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 3).setPinsDown(2, 11));
     }
 
+    /**
+     * Test if an Exception is caught when a score more than 10 is put in the third roll
+     */
+    @Test(expected = BowlingException.class)
+    public void setPinsDown_ScoreYMoreThanTenOnthirdRoll_BowlingException(){
+        this.game.addFrame(new LastFrame(10).setPinsDown(1, 5).setPinsDown(2, 5).setPinsDown(3,11));
+    }
     /**
      * Test if you put the rolls in the right order it works
      */
@@ -281,6 +345,8 @@ public class BowlingTest {
 
     }
 
+
+
     /**
      * Test if you don't put the rolls in the right order it doesn't work
      */
@@ -288,6 +354,7 @@ public class BowlingTest {
     public void setPinDown_FirstParameter_2Before1_Exception() {
         this.game.addFrame(new NormalFrame(2).setPinsDown(2, 3).setPinsDown(1, 6));
     }
+
 
     /**
      * Reset the scores of each frame.
