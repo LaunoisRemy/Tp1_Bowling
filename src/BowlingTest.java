@@ -2,10 +2,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import stev.bowling.BowlingException;
-import stev.bowling.Game;
-import stev.bowling.LastFrame;
-import stev.bowling.NormalFrame;
+import stev.bowling.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -151,6 +148,66 @@ public class BowlingTest {
         this.game.addFrame(new NormalFrame(9).setPinsDown(1, 10));
     }
 
+// =============== Test sur la classe Game ===========================================
+
+    /**
+     * Test get frame with 0 frame
+     */
+    @Test(expected = BowlingException.class)
+    public void getFrame_noFrameExisting_BowlingException() {
+        this.game.getFrame(1);
+    }
+
+    /**
+     * Test get frame with index out of bound (0)
+     */
+    @Test(expected = BowlingException.class)
+    public void getFrame_FrameZero_BowlingException() {
+        createGameWithoutLast();
+        this.game.getFrame(0);
+    }
+    /**
+     * Test get frame with index out of bound (negative)
+     */
+    @Test(expected = BowlingException.class)
+    public void getFrame_Negative_BowlingException() {
+        createGameWithoutLast();
+        this.game.getFrame(-1);
+    }
+    /**
+     * Test get frame with index out of bound (superior at ten)
+     */
+    @Test(expected = BowlingException.class)
+    public void getFrame_SuperiorAtTen_BowlingException() {
+        this.completeGame.getFrame(11);
+    }
+
+    /**
+     * Test get frame with index equal 1
+     */
+    @Test()
+    public void getFrame_First_BowlingException() {
+        Frame shouldBe = new NormalFrame(1).setPinsDown(1, 1).setPinsDown(2, 9);
+        this.game.addFrame(shouldBe);
+
+        Frame result = this.game.getFrame(1);
+
+        Assert.assertEquals("The frame should be",shouldBe,result);
+    }
+
+    /**
+     * Test get frame with index equal 10
+     */
+    @Test()
+    public void getFrame_Ten_BowlingException() {
+        createGameWithoutLast();
+        Frame shouldBe = new LastFrame(10).setPinsDown(1, 1).setPinsDown(2, 9).setPinsDown(3, 3);
+        this.game.addFrame(shouldBe);
+
+        Frame result = this.game.getFrame(10);
+
+        Assert.assertEquals("The frame should be",shouldBe,result);
+    }
 // =============== Test sur la classe Frame ===========================================
 
     /**
