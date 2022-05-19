@@ -2,7 +2,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import stev.bowling.*;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +14,19 @@ import static org.junit.Assert.assertEquals;
  * Project: Tp1_Bowling
  * Package: PACKAGE_NAME
  */
+@RunWith(Parameterized.class)
 public class BowlingTest {
+
+    @Parameterized.Parameters(name= "{index}: fib[{0}]={1}")
+    public static Iterable<Object[]> data() {
+        return Arrays.asList(new Object[][]{{0,9}, {1,10}, {5,0}, {9,13}});
+    }
+
+    @Parameterized.Parameter()
+    public int frameNumber;
+
+    @Parameterized.Parameter(1)
+    public int expectedPinsDown;
 
     private Game game;
     private Game completeGame;
@@ -177,7 +193,7 @@ public class BowlingTest {
     /**
      * Test get frame with index out of bound (superior at ten)
      */
-    @Test(expected = BowlingException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getFrame_SuperiorAtTen_BowlingException() {
         this.completeGame.getFrame(11);
     }
@@ -231,7 +247,7 @@ public class BowlingTest {
     public void toString_Spare_GetScoreSlash(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 9).setPinsDown(2,1));
         String display = this.game.toString();
-        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+        Assert.assertEquals("The score should be ", "|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  9/|    |    |    |    |    |    |    |    |    |\n" +
                 "|    |    |    |    |    |    |    |    |    |    |",display);
@@ -245,7 +261,7 @@ public class BowlingTest {
     public void toString_NoPinsTouched_GetVoid(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 0).setPinsDown(2,0));
         String display = this.game.toString();
-        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+        Assert.assertEquals("The score should be ", "|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  --|    |    |    |    |    |    |    |    |    |\n" +
                 "|0   |    |    |    |    |    |    |    |    |    |",display);
@@ -259,7 +275,7 @@ public class BowlingTest {
     public void toString_OpenHit_GetScoreWithTwoCharacter(){
         this.game.addFrame(new NormalFrame(1).setPinsDown(1, 2).setPinsDown(2,3));
         String display = this.game.toString();
-        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+        Assert.assertEquals("The score should be ", "|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  23|    |    |    |    |    |    |    |    |    |\n" +
                 "|5   |    |    |    |    |    |    |    |    |    |",display);
@@ -283,7 +299,7 @@ public class BowlingTest {
         this.game.addFrame(new LastFrame(10).setPinsDown(1, 3).setPinsDown(2,7).setPinsDown(3,3));
 
         String display = this.game.toString();
-        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+        Assert.assertEquals("The score should be ", "|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  23|  23|  23|  23|  23|  23|  23|  23|  23| 3/3|\n" +
                 "|5   |10  |15  |20  |25  |30  |35  |40  |45  |58  |",display);
@@ -307,7 +323,7 @@ public class BowlingTest {
         this.game.addFrame(new LastFrame(10).setPinsDown(1, 3).setPinsDown(2,3));
 
         String display = this.game.toString();
-        Assert.assertEquals("The score should be ","|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
+        Assert.assertEquals("The score should be ", "|#1  |#2  |#3  |#4  |#5  |#6  |#7  |#8  |#9  |#10 |\n" +
                 "|----+----+----+----+----+----+----+----+----+----+\n" +
                 "|  8/|  81|  81|  81|  81|  81|  81|  81|  81| 81|\n" +
                 "|18  |27  |36  |45  |54  |63  |72  |81  |90  |99  |",display);
@@ -415,7 +431,7 @@ public class BowlingTest {
 
     /**
      * Reset the scores of each frame.
-     * @result The scores will be reset and thus be identical to the score
+     * The scores will be reset and thus be identical to the score
      * chart at the beginning of the game. The assertion is thus true.
      */
     @Test
@@ -431,7 +447,7 @@ public class BowlingTest {
 
     /**
      * Verify that the scores of the frames can be set after a reset.
-     * @result The scores are added to the chart.
+     * The scores are added to the chart.
      */
     @Test
     public void setPinDown_AfterReset_setFrame1() {
@@ -445,7 +461,7 @@ public class BowlingTest {
 
     /**
      * Verify that the score of the second roll cannot be added after the score of the first roll.
-     * @result A BowlingException is raised : "You must first enter the score for roll 1".
+     * A BowlingException is raised : "You must first enter the score for roll 1".
      */
     @Test(expected = BowlingException.class)
     public void setPinDown_AfterReset_1Before2_Exception() {
@@ -459,15 +475,16 @@ public class BowlingTest {
 
     /**
      * Verify that number of rolls counted byt the method correspond to the number of rolls set by frame.
-     * @result The assertions are true.
+     * The assertions are true.
      */
     @Test
     public void countRolls_returnExactNumberOfRollsByFrame() {
         game = completeGame;
+        String assertMsg = "countRollsByFrame : ";
 
-        Assert.assertEquals("countRollsByFrame : ",2,this.game.m_frames.get(0).countRolls());
-        Assert.assertEquals("countRollsByFrame : ",1,this.game.m_frames.get(1).countRolls());
-        Assert.assertEquals("countRollsByFrame : ",3,this.game.m_frames.get(9).countRolls());
+        Assert.assertEquals(assertMsg,2,this.game.m_frames.get(0).countRolls());
+        Assert.assertEquals(assertMsg,1,this.game.m_frames.get(1).countRolls());
+        Assert.assertEquals(assertMsg,3,this.game.m_frames.get(9).countRolls());
 
         this.game.m_frames.get(9).reset();
         this.game.m_frames.get(9).setPinsDown(1, 4).setPinsDown(2, 5);
@@ -476,19 +493,26 @@ public class BowlingTest {
     }
 
     /**
-     * Verify that number of pins down counted by the method correspond to the total sum of the score of each roll set by frame.
-     * @result The assertions are true except for the last one. When there are only two rolls in the last
-     * frame the score isn't exact : The assertion expects 9 (4 + 5) and the method tested return 8.
+     * use the parameters of the test class to verify that number of pins down counted by the method correspond
+     * to the total sum of the score of each roll set by frame.
+     * The assertions are all true
      */
     @Test
-    public void countPinsDown_returnExactNumberOfPinsByFrame() {
+    public void countPinsDown_returnExactNumberOfPinsByFrame_Parametrized() {
         game = completeGame;
 
-        Assert.assertEquals("countPinsDownByFrame : ",9,this.game.m_frames.get(0).countPinsDown());
-        Assert.assertEquals("countPinsDownByFrame : ",10,this.game.m_frames.get(1).countPinsDown());
-        Assert.assertEquals("countPinsDownByFrame : ",0,this.game.m_frames.get(5).countPinsDown());
-        Assert.assertEquals("countPinsDownByFrame : ",13,this.game.m_frames.get(9).countPinsDown());
+        int actualPinsDownByNormalFrame = this.completeGame.m_frames.get(frameNumber).countPinsDown();
+        assertEquals(expectedPinsDown,actualPinsDownByNormalFrame);
+    }
 
+    /**
+     * Verify that number of pins down counted by the method correspond to the total sum of the score of each roll set by frame.
+     * The assertion is false. When there are only two rolls in the last
+     * frame the score isn't exact. Here, the assertion expects 9 (4 + 5) and the method tested return 8.
+     */
+    @Test
+    public void countPinsDown_returnExactNumberOfPinsByLastFrameWithTwoRolls() {
+        game = completeGame;
         this.game.m_frames.get(9).reset();
         this.game.m_frames.get(9).setPinsDown(1, 4).setPinsDown(2, 5);
 
@@ -497,19 +521,20 @@ public class BowlingTest {
 
     /**
      * Verify that number of pins down by roll counted by the method correspond to the score set by roll.
-     * @result The assertions are true except for the last one. If a roll did not happen, the method should
+     * The assertions are true except for the last one. If a roll did not happen, the method should
      * return -1 as the number of pins down for the roll however it returns 0.
      */
     @Test
     public void getPinsDown_returnExactNumberOfPinsDownByRoll() {
         game = completeGame;
+        String assertMsg = "getPinsDownByRoll : ";
 
-        Assert.assertEquals("getPinsDownByRoll : ",10,this.game.m_frames.get(1).getPinsDown(1));
-        Assert.assertEquals("getPinsDownByRoll : ",0,this.game.m_frames.get(2).getPinsDown(2));
-        Assert.assertEquals("getPinsDownByRoll : ",1,this.game.m_frames.get(9).getPinsDown(1));
-        Assert.assertEquals("getPinsDownByRoll : ",9,this.game.m_frames.get(9).getPinsDown(2));
-        Assert.assertEquals("getPinsDownByRoll : ",3,this.game.m_frames.get(9).getPinsDown(3));
-        Assert.assertEquals("getPinsDownByRoll : ",-1,this.game.m_frames.get(1).getPinsDown(2));
+        Assert.assertEquals(assertMsg,10,this.game.m_frames.get(1).getPinsDown(1));
+        Assert.assertEquals(assertMsg,0,this.game.m_frames.get(2).getPinsDown(2));
+        Assert.assertEquals(assertMsg,1,this.game.m_frames.get(9).getPinsDown(1));
+        Assert.assertEquals(assertMsg,9,this.game.m_frames.get(9).getPinsDown(2));
+        Assert.assertEquals(assertMsg,3,this.game.m_frames.get(9).getPinsDown(3));
+        Assert.assertEquals(assertMsg,-1,this.game.m_frames.get(1).getPinsDown(2));
     }
 
     // =============== Test sur la classe Game ===========================================
